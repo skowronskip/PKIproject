@@ -5,7 +5,8 @@
     "database": "pki",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "secret": "pki_secret_key"
   },
   "test": {
     "username": "root",
