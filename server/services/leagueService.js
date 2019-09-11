@@ -23,8 +23,9 @@ async function updateLeague({id, name, country}) {
 
 async function getAllLeagues() {
     try {
-        return League.getAll();
+        return League.findAll();
     } catch (e) {
+        console.log(e);
         return null;
     }
 }
@@ -33,9 +34,10 @@ async function deleteLeague(id) {
     try {
         const league = await League.findByPk(id);
         if (league) {
-            return league.delete();
+            return league.destroy();
         }
     } catch (e) {
+        console.log(e);
         return null;
     }
 }

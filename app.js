@@ -3,6 +3,7 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import userRoutes from "./server/routes/userRoutes";
+import leagueRoutes from "./server/routes/leagueRoutes";
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 userRoutes(app);
+leagueRoutes(app);
 
 app.get('*', (req, res) => res.status(200).send({
     message: 'Welcome to the default API route',

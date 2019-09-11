@@ -33,17 +33,17 @@ async function updateLeague(req, res) {
 }
 
 async function deleteLeague(req, res) {
-    const {id} = req.body;
+    const {id} = req.params;
     if (id) {
         const deletedLeague = await leagueService.deleteLeague(id);
         if (deletedLeague) {
             return res.status(201).send({
                 success: true,
-                message: 'League successfully updated',
+                message: 'League successfully deleted',
                 deletedLeague
             })
         }
-        return res.status(500).send({msg: 'Cannot delete user!'});
+        return res.status(500).send({msg: 'Cannot delete league!'});
     }
     return res.status(400).send({msg: 'Missing fields'});
 }
