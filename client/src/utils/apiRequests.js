@@ -15,3 +15,7 @@ const getConfig = config => {
 export async function loginUser(login, password) {
     return axios.post('/api/login', {login, password}, getConfig());
 }
+
+export async function signupUser(login, password, email) {
+    return axios.post('/api/users', {login, password, email}, getConfig());
+}

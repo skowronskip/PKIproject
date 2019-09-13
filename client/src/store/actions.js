@@ -1,4 +1,4 @@
-import {loginUser} from "../utils/apiRequests";
+import {loginUser, signupUser} from "../utils/apiRequests";
 
 const actions = {
     LOGIN_USER: async (context, {login, password}) => {
@@ -9,9 +9,20 @@ const actions = {
             // TODO HANDLE ERROR
         }
     },
+    SIGNUP_USER: async (context, {login, password, email}) => {
+        try {
+            await signupUser(login, password, email);
+            context.dispatch('SIGNUP_SUCCESS')
+        } catch (e) {
+            // TODO HANDLE ERROR
+        }
+    },
     LOGIN_SUCCESS: (context, jwt) => {
         localStorage.setItem('jwt', jwt);
-    }
+    },
+    SIGNUP_SUCCESS: (context) => {
+        context.$router.push('/login');
+    },
 }
 
 export default actions

@@ -3,7 +3,13 @@
         <b-row>
             <b-col>
                 <b-form @submit.prevent="login()">
-                    <h1>Login Page</h1>
+                    <h1>Register Page</h1>
+                    <b-form-input
+                            type="email"
+                            required
+                            placeholder="E-mail"
+                            v-model="form.email"
+                    ></b-form-input>
                     <b-form-input
                             type="text"
                             required
@@ -24,7 +30,7 @@
 </template>
 <script>
 export default {
-    name: 'Login',
+    name: 'Register',
     components: {},
     props: {},
     data() {
@@ -34,7 +40,7 @@ export default {
     },
     methods: {
         login() {
-            this.$store.dispatch('LOGIN_USER', {login: this.form.login, password: this.form.password});
+            this.$store.dispatch('SIGNUP_USER', {login: this.form.login, password: this.form.password, email: this.form.email});
         }
     }
 }
