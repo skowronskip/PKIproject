@@ -1,20 +1,12 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Register />
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
-
-<script>
-import Register from "./components/Register";
-
-export default {
-  name: 'app',
-  components: {
-    Register
-  }
-}
-</script>
 
 <style>
 #app {
