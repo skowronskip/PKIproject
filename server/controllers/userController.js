@@ -18,6 +18,7 @@ async function signUp(req, res) {
 }
 
 async function login (req, res) {
+    console.log(req.body);
     const {login, password} = req.body;
 
     if (login && password) {

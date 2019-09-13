@@ -1,3 +1,5 @@
-const state = {}
+const state = {
+    user: {}
+};
 
 export default state
