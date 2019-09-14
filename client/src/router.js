@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from "./components/Login";
 import Register from "./components/Register";
+import MainApp from "./components/MainApp";
 
 Vue.use(Router)
 
@@ -41,9 +42,9 @@ export default new Router({
       beforeEnter: onlyForNotLoggedIn
     },
     {
-      path: '/test',
-      name: 'test',
-      component: Home,
+      path: '/app',
+      name: 'app',
+      component: MainApp,
       beforeEnter: authRoute
     },
   ]

@@ -32,7 +32,7 @@ const actions = {
     },
     async LOGIN_SUCCESS(context, jwt) {
         localStorage.setItem('jwt', jwt);
-        router.push('/');
+        router.push('app');
     },
     SIGNUP_SUCCESS: (context) => {
         context.$router.push('/login');
