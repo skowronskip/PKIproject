@@ -4,6 +4,9 @@ const mutations = {
     },
     LOGOUT_USER: (state) => {
         state.loggedIn = false;
+    },
+    UPDATE_CONNECT_USER: (state, connectedUsers) => {
+        state.socketData.connectedUsers = connectedUsers;
     }
 }
 

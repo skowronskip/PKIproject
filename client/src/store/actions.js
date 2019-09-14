@@ -37,6 +37,9 @@ const actions = {
     SIGNUP_SUCCESS: (context) => {
         context.$router.push('/login');
     },
+    UPDATE_CONNECT_USER: (context, connectedUsers) => {
+        context.commit('UPDATE_CONNECT_USER', connectedUsers);
+    }
 }
 
 export default actions
