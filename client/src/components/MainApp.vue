@@ -2,7 +2,9 @@
   <div>
     <h1>MAIN APP</h1>
     <h1>Connected Users: {{ connectedUsers }}</h1>
-    <h1>{{ tablesNames }}</h1>
+    <b-form-select v-model="selectedTable" :options="tablesNames" >
+      <option :value="null">Please select an option</option>
+    </b-form-select>
   </div>
 </template>
 
@@ -16,7 +18,6 @@
 }
 </style>
 <script>
-  import socket from "../socket";
   export default {
     name: 'MainApp',
     components: {},
@@ -29,16 +30,19 @@
       });
     },
     computed: {
+      socket() {
+        return this.$store.getters.getSocket
+      },
       connectedUsers() {
         return this.$store.getters.getConnectedUsers
       },
       tablesNames() {
-        return this.$store.getters.getTablesNames
+        return this.$store.getters.getTablesNames.map(name => ({value: name, text: name}))
       }
     },
     data() {
       return {
-        socket: socket
+        selectedTable: null,
       }
     }
   }

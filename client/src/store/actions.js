@@ -29,13 +29,18 @@ const actions = {
     LOGOUT_USER: (context) => {
         localStorage.removeItem('jwt');
         context.commit('LOGOUT_USER');
+        router.push({path: '/'});
     },
     async LOGIN_SUCCESS(context, jwt) {
         localStorage.setItem('jwt', jwt);
+        context.dispatch('CREATE_SOCKET');
         router.push('app');
     },
     SIGNUP_SUCCESS: (context) => {
         context.$router.push('/login');
+    },
+    CREATE_SOCKET: (context) => {
+        context.commit('CREATE_SOCKET');
     },
     UPDATE_CONNECT_USER: (context, connectedUsers) => {
         context.commit('UPDATE_CONNECT_USER', connectedUsers);
