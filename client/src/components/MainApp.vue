@@ -2,6 +2,7 @@
   <div>
     <h1>MAIN APP</h1>
     <h1>Connected Users: {{ connectedUsers }}</h1>
+    <h1>{{ tablesNames }}</h1>
   </div>
 </template>
 
@@ -23,10 +24,16 @@
       this.socket.on('UPDATE_CONNECTED_USERS', ({connectedUsers}) => {
         this.$store.dispatch('UPDATE_CONNECT_USER', connectedUsers)
       });
+      this.socket.on('UPDATE_TABLES_NAMES', ({tablesNames}) => {
+        this.$store.dispatch('UPDATE_TABLES_NAMES', tablesNames)
+      });
     },
     computed: {
       connectedUsers() {
         return this.$store.getters.getConnectedUsers
+      },
+      tablesNames() {
+        return this.$store.getters.getTablesNames
       }
     },
     data() {

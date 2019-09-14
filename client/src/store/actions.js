@@ -39,7 +39,10 @@ const actions = {
     },
     UPDATE_CONNECT_USER: (context, connectedUsers) => {
         context.commit('UPDATE_CONNECT_USER', connectedUsers);
+    },
+    UPDATE_TABLES_NAMES: (context, tablesNames) => {
+        context.commit('UPDATE_TABLES_NAMES', tablesNames);
     }
-}
+};
 
 export default actions

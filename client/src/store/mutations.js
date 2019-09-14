@@ -7,7 +7,10 @@ const mutations = {
     },
     UPDATE_CONNECT_USER: (state, connectedUsers) => {
         state.socketData.connectedUsers = connectedUsers;
+    },
+    UPDATE_TABLES_NAMES: (state, tablesNames) => {
+        state.socketData.tablesNames = tablesNames;
     }
-}
+};
 
 export default mutations

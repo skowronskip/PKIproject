@@ -4,6 +4,8 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import userRoutes from "./server/routes/userRoutes";
 import leagueRoutes from "./server/routes/leagueRoutes";
+import socketIo from 'socket.io';
+import databaseService from "./server/services/databaseService";
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -44,4 +46,23 @@ app.get('*', (req, res) => res.status(200).send({
 
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+let clients = [];
+
+const io = socketIo(server);
+
+io.on('connection', async (socket) => {
+    clients.push({
+        socketId: socket.id,
+        currentView: null,
+        specificQuery: null,
+    });
+    io.emit('UPDATE_CONNECTED_USERS', {connectedUsers: clients.length});
+    socket.emit('UPDATE_TABLES_NAMES', {tablesNames: await databaseService.showTables()});
+
+    socket.on('disconnect', () => {
+        clients = clients.filter((client) => client.socketId !== socket.id);
+        io.emit('UPDATE_CONNECTED_USERS', {connectedUsers: clients.length});
+    })
 });

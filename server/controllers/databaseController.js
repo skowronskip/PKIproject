@@ -1,9 +1,8 @@
 import databaseService from "../services/databaseService";
 
 async function showTable(req, res) {
-    const tables = await databaseService.showTables();
-    if (tables) {
-        const tablesNames = tables[0].map((table) => table.tablename).filter((name) => name !== 'SequelizeMeta');
+    const tablesNames = await databaseService.showTables();
+    if (tablesNames) {
         return res.status(201).send({
             success: true,
             tablesNames

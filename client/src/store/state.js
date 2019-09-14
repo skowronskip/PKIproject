@@ -2,6 +2,7 @@ const state = {
     loggedIn: false,
     socketData: {
         currentData: [],
+        tablesNames: [],
         connectedUsers: 0
     }
 };
