@@ -36,8 +36,8 @@ const actions = {
         context.dispatch('CREATE_SOCKET');
         router.push('app');
     },
-    SIGNUP_SUCCESS: (context) => {
-        context.$router.push('/login');
+    SIGNUP_SUCCESS: () => {
+        router.push({path: '/login'});
     },
     CREATE_SOCKET: (context) => {
         context.commit('CREATE_SOCKET');
@@ -47,6 +47,10 @@ const actions = {
     },
     UPDATE_TABLES_NAMES: (context, tablesNames) => {
         context.commit('UPDATE_TABLES_NAMES', tablesNames);
+    },
+    SHOW_TABLE_VIEW: (context, table) => {
+        context.commit('SET_CURRENT_TABLE', table);
+        router.push({name: 'table'});
     }
 };
 

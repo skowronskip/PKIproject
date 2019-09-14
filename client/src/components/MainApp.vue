@@ -5,6 +5,7 @@
     <b-form-select v-model="selectedTable" :options="tablesNames" >
       <option :value="null">Please select an option</option>
     </b-form-select>
+    <b-button @click="goToTableView()">Show table</b-button>
   </div>
 </template>
 
@@ -43,6 +44,13 @@
     data() {
       return {
         selectedTable: null,
+      }
+    },
+    methods: {
+      goToTableView() {
+        if(this.selectedTable) {
+          this.$store.dispatch('SHOW_TABLE_VIEW', this.selectedTable);
+        }
       }
     }
   }

@@ -16,6 +16,9 @@ const mutations = {
     CREATE_SOCKET: (state) => {
         state.socketData.socket = io('localhost:3000');
     },
+    SET_CURRENT_TABLE: (state, table) => {
+        state.socketData.currentTable = table;
+    },
 };
 
 export default mutations

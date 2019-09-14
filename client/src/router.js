@@ -47,5 +47,11 @@ export default new Router({
       component: MainApp,
       beforeEnter: authRoute
     },
+    {
+      path: '/app/table',
+      name: 'table',
+      component: Home,
+      beforeEnter: authRoute
+    },
   ]
 })
