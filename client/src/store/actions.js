@@ -34,7 +34,7 @@ const actions = {
     async LOGIN_SUCCESS(context, jwt) {
         localStorage.setItem('jwt', jwt);
         context.dispatch('CREATE_SOCKET');
-        router.push('app');
+        router.push({name: 'app'});
     },
     SIGNUP_SUCCESS: () => {
         router.push({path: '/login'});

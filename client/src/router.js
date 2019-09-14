@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Login from "./components/Login";
 import Register from "./components/Register";
 import MainApp from "./components/MainApp";
+import TableView from "./components/TableView";
 
 Vue.use(Router)
 
@@ -50,7 +51,7 @@ export default new Router({
     {
       path: '/app/table',
       name: 'table',
-      component: Home,
+      component: TableView,
       beforeEnter: authRoute
     },
   ]
