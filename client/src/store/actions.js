@@ -58,6 +58,9 @@ const actions = {
     },
     ADD_RECORD: (context, form) => {
         context.getters.getSocket.emit('ADD_RECORD', {form, table: context.getters.getCurrentTable});
+    },
+    EDIT_RECORD: (context, form) => {
+        context.getters.getSocket.emit('EDIT_RECORD', {form, table: context.getters.getCurrentTable});
     }
 };
 

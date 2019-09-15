@@ -73,6 +73,9 @@ io.on('connection', async (socket) => {
     socket.on('ADD_RECORD', async (data) => {
         await addRecord(socket, data);
     });
+    socket.on('EDIT_RECORD', async (data) => {
+        await editRecord(socket, data);
+    });
     socket.on('disconnect', () => {
         clients = clients.filter((client) => client.socket.id !== socket.id);
         io.emit('UPDATE_CONNECTED_USERS', {connectedUsers: clients.length});
@@ -94,6 +97,10 @@ async function updateCurrentData(socket, table) {
     }
 }
 
+async function updateClientsCurrentData() {
+    await Promise.all(clients.map(async (client) => updateCurrentData(client.socket, client.currentTable)));
+}
+
 async function addRecord(socket, data) {
     switch(data.table) {
         case 'Leagues':
@@ -107,5 +114,21 @@ async function addRecord(socket, data) {
         default:
             console.log('Unknown table query ' + data.table);
     }
-    await Promise.all(clients.map(async (client) => updateCurrentData(client.socket, client.currentTable)));
+    await updateClientsCurrentData();
+}
+
+async function editRecord(socket, data) {
+    switch(data.table) {
+        case 'Leagues':
+            await leagueService.updateLeague(data.form);
+            break;
+        case 'Teams':
+            await teamService.updateTeam(data.form);
+            break;
+        case 'Users':
+            break;
+        default:
+            console.log('Unknown table query ' + data.table);
+    }
+    await updateClientsCurrentData();
 }
