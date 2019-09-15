@@ -13,6 +13,9 @@ const mutations = {
     UPDATE_TABLES_NAMES: (state, tablesNames) => {
         state.socketData.tablesNames = tablesNames;
     },
+    UPDATE_CURRENT_DATA: (state, currentData) => {
+        state.socketData.currentData = currentData;
+    },
     CREATE_SOCKET: (state) => {
         state.socketData.socket = io('localhost:3000');
     },

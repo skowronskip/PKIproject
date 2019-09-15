@@ -23,7 +23,7 @@ async function updateTeam({id, name, leagueId}) {
 
 async function getAllTeams() {
     try {
-        return Team.getAll();
+        return Team.findAll();
     } catch (e) {
         return null;
     }

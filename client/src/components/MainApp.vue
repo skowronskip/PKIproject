@@ -20,6 +20,9 @@
       this.socket.on('UPDATE_TABLES_NAMES', ({tablesNames}) => {
         this.$store.dispatch('UPDATE_TABLES_NAMES', tablesNames)
       });
+      this.socket.on('UPDATE_CURRENT_DATA', ({currentData}) => {
+        this.$store.dispatch('UPDATE_CURRENT_DATA', currentData)
+      });
     },
     computed: {
       socket() {

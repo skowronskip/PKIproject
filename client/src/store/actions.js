@@ -48,8 +48,12 @@ const actions = {
     UPDATE_TABLES_NAMES: (context, tablesNames) => {
         context.commit('UPDATE_TABLES_NAMES', tablesNames);
     },
+    UPDATE_CURRENT_DATA: (context, currentData) => {
+        context.commit('UPDATE_CURRENT_DATA', currentData);
+    },
     SHOW_TABLE_VIEW: (context, table) => {
         context.commit('SET_CURRENT_TABLE', table);
+        context.getters.getSocket.emit('GET_TABLE', table);
         router.push({name: 'table'});
     }
 };

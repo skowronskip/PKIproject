@@ -3,7 +3,8 @@ const getters = {
     getConnectedUsers: (state) => state.socketData.connectedUsers,
     getTablesNames: (state) => state.socketData.tablesNames,
     getSocket: (state) => state.socketData.socket,
-    getCurrentTable: (state) => state.socketData.currentTable
+    getCurrentTable: (state) => state.socketData.currentTable,
+    getCurrentData: (state) => state.socketData.currentData
 };
 
 export default getters

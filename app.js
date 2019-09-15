@@ -6,6 +6,8 @@ import userRoutes from "./server/routes/userRoutes";
 import leagueRoutes from "./server/routes/leagueRoutes";
 import socketIo from 'socket.io';
 import databaseService from "./server/services/databaseService";
+import leagueService from "./server/services/leagueService";
+import teamService from "./server/services/teamService";
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -54,15 +56,33 @@ const io = socketIo(server);
 
 io.on('connection', async (socket) => {
     clients.push({
-        socketId: socket.id,
-        currentView: null,
+        socket: socket,
+        currentTable: null,
         specificQuery: null,
     });
     io.emit('UPDATE_CONNECTED_USERS', {connectedUsers: clients.length});
     socket.emit('UPDATE_TABLES_NAMES', {tablesNames: await databaseService.showTables()});
 
+    socket.on('GET_TABLE', async (table) => {
+        await updateCurrentData(socket, table);
+    });
     socket.on('disconnect', () => {
         clients = clients.filter((client) => client.socketId !== socket.id);
         io.emit('UPDATE_CONNECTED_USERS', {connectedUsers: clients.length});
     })
 });
+
+async function updateCurrentData(socket, table) {
+    switch(table) {
+        case 'Leagues':
+            socket.emit('UPDATE_CURRENT_DATA', {currentData: await leagueService.getAllLeagues()});
+            break;
+        case 'Teams':
+            socket.emit('UPDATE_CURRENT_DATA', {currentData: await teamService.getAllTeams()});
+            break;
+        case 'Users':
+            break;
+        default:
+            console.log('Unknown table query ' + table);
+    }
+}
