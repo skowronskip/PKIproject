@@ -55,6 +55,9 @@ const actions = {
         context.commit('SET_CURRENT_TABLE', table);
         context.getters.getSocket.emit('GET_TABLE', table);
         router.push({name: 'table'});
+    },
+    ADD_RECORD: (context, form) => {
+        context.getters.getSocket.emit('ADD_RECORD', {form, table: context.getters.getCurrentTable});
     }
 };
 

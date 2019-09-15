@@ -4,14 +4,22 @@
     <h1>Connected Users: {{ connectedUsers }}</h1>
     <h1>{{ currentTable }}</h1>
     <b-table :items="currentData" />
+    <LeagueForm :form="form" :edit="edit" />
   </div>
 </template>
 
 <script>
+  import LeagueForm from "./LeagueForm";
   export default {
     name: 'TableView',
-    components: {},
+    components: {LeagueForm},
     mounted() {},
+    data() {
+      return {
+        edit: false,
+        form: {}
+      }
+    },
     computed: {
       socket() {
         return this.$store.getters.getSocket
