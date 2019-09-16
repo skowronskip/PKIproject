@@ -5,13 +5,14 @@
         <h1>Table View</h1>
         <h1>Connected Users: {{ connectedUsers }}</h1>
         <h1>{{ currentTable }}</h1>
-        <b-table v-if="!error" :items="currentData">
+        <b-form-input type="text" v-model="filter" placeholder="Search..." />
+        <b-table v-if="!error" :items="currentData" :fields="fields" :filter="filter">
           <template v-slot:cell(action)="data">
             <b-button @click="editRecord(data.item)">Edit</b-button>
             <b-button @click="removeRecord(data.item)">Remove</b-button>
           </template>
         </b-table>
-        <b-form @submit.prevent="edit ? editRecordButton() : addRecord()">
+        <b-form v-if="currentTable" @submit.prevent="edit ? editRecordButton() : addRecord()">
           <b-form-input
                   type="text"
                   v-model="form.name"
@@ -49,6 +50,7 @@
     data() {
       return {
         edit: false,
+        filter: '',
         form: {}
       }
     },
@@ -68,6 +70,13 @@
           return currentData.data.map((item) => ({...item, action: ''}))
         }
         return currentData.data
+      },
+      fields() {
+        const {data} = this.$store.getters.getCurrentData;
+        if (data && data.length > 0) {
+          return Object.keys(data[0]).map(key => ({key, sortable: true}));
+        }
+        return null;
       },
       error() {
         return this.$store.getters.getCurrentData.error;

@@ -10,6 +10,7 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
+                <b-navbar-brand>{{ login }}</b-navbar-brand>
                 <b-button size="sm" class="my-2 my-sm-0" @click="logout()" variant="outline-danger">Log out</b-button>
             </b-navbar-nav>
         </b-collapse>
@@ -20,6 +21,11 @@ export default {
     name: 'LoggedInNavigation',
     components: {},
     props: {},
+    computed: {
+        login() {
+            return localStorage.getItem('login') || '';
+        }
+    },
     methods: {
         logout() {
             this.$store.dispatch('LOGOUT_USER');

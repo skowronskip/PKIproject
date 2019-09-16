@@ -4,16 +4,17 @@ import router from "../router";
 const actions = {
     CHECK_IF_USER_IS_LOGGED(context) {
         const token = localStorage.getItem('jwt');
-        if (token) {
+        const login = localStorage.getItem('login');
+        if (token && login) {
             context.commit('LOGIN_USER');
-            context.dispatch('LOGIN_SUCCESS', token)
+            context.dispatch('LOGIN_SUCCESS', {token, login})
         }
     },
     async LOGIN_USER(context, {login, password}) {
         try {
             const {data} = await loginUser(login, password);
             context.commit('LOGIN_USER');
-            context.dispatch('LOGIN_SUCCESS', data.token)
+            context.dispatch('LOGIN_SUCCESS', data)
         } catch (e) {
             // TODO HANDLE ERROR
         }
@@ -31,8 +32,9 @@ const actions = {
         context.commit('LOGOUT_USER');
         router.push({path: '/'});
     },
-    async LOGIN_SUCCESS(context, jwt) {
-        localStorage.setItem('jwt', jwt);
+    async LOGIN_SUCCESS(context, data) {
+        localStorage.setItem('jwt', data.token);
+        localStorage.setItem('login', data.login);
         context.dispatch('CREATE_SOCKET');
         router.push({name: 'app'});
     },
