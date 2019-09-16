@@ -11,7 +11,30 @@
             <b-button @click="removeRecord(data.item)">Remove</b-button>
           </template>
         </b-table>
-        <RecordForm v-if="currentTable && !error" :form="form" :edit="edit" />
+        <b-form @submit.prevent="edit ? editRecordButton() : addRecord()">
+          <b-form-input
+                  type="text"
+                  v-model="form.name"
+                  required
+                  placeholder="Name"
+          />
+          <b-form-input
+                  v-if="currentTable === 'Leagues'"
+                  type="text"
+                  v-model="form.country"
+                  required
+                  placeholder="Country"
+          />
+          <b-form-input
+                  v-if="currentTable === 'Teams'"
+                  type="number"
+                  v-model="form.leagueId"
+                  required
+                  placeholder="LeagueId"
+          />
+          <b-button type="submit">{{edit ? 'Edit record' : 'Add record'}}</b-button>
+          <b-button v-if="edit" @click="resetForm()">Cancel</b-button>
+        </b-form>
         <h1 v-if="error">{{error}}</h1>
       </b-col>
     </b-row>
@@ -19,10 +42,9 @@
 </template>
 
 <script>
-  import RecordForm from "./RecordForm";
   export default {
     name: 'TableView',
-    components: {RecordForm},
+    components: {},
     mounted() {},
     data() {
       return {
@@ -58,6 +80,18 @@
       },
       removeRecord(data) {
         this.$store.dispatch('REMOVE_RECORD', data)
+      },
+      addRecord() {
+        this.$store.dispatch('ADD_RECORD', this.form);
+        this.resetForm();
+      },
+      resetForm() {
+        this.edit = false;
+        this.form = {};
+      },
+      async editRecordButton() {
+        await this.$store.dispatch('EDIT_RECORD', this.form);
+        this.resetForm();
       }
     }
   }

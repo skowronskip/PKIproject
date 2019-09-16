@@ -9,19 +9,21 @@
     "secret": "pki_secret_key"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "username": "pki_user",
+    "password": "pki_pass",
+    "database": "pki",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "secret": "pki_secret_key"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "username": "pki_user",
+    "password": "pki_pass",
+    "database": "pki",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "secret": "pki_secret_key"
   }
 }
