@@ -3,7 +3,9 @@
         <b-navbar-brand href="/">Skowronski PKI Project</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
+        <b-navbar-nav>
+            <router-link to="/app"><b-button size="sm" class="my-2 my-sm-0" variant="outline-primary">App</b-button></router-link>
+        </b-navbar-nav>
         <b-collapse id="nav-collapse" is-nav>
 
             <!-- Right aligned nav items -->
