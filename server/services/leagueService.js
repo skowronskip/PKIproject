@@ -9,7 +9,6 @@ async function createLeague({name, country}) {
         return null;
     }
 }
-
 async function updateLeague({id, name, country}) {
     try {
         const league = await League.findByPk(id);

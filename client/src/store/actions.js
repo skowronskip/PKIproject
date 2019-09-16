@@ -61,6 +61,9 @@ const actions = {
     },
     EDIT_RECORD: (context, form) => {
         context.getters.getSocket.emit('EDIT_RECORD', {form, table: context.getters.getCurrentTable});
+    },
+    REMOVE_RECORD: (context, form) => {
+        context.getters.getSocket.emit('REMOVE_RECORD', {form, table: context.getters.getCurrentTable});
     }
 };
 

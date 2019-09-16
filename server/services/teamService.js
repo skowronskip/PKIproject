@@ -33,7 +33,7 @@ async function deleteTeam(id) {
     try {
         const team = await Team.findByPk(id);
         if (team) {
-            return team.delete();
+            return team.destroy();
         }
     } catch (e) {
         return null;

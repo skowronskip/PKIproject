@@ -6,7 +6,7 @@
     <b-table :items="currentData">
       <template v-slot:cell(action)="data">
         <b-button @click="editRecord(data.item)">Edit</b-button>
-        <b-button>Remove</b-button>
+        <b-button @click="removeRecord(data.item)">Remove</b-button>
       </template>
     </b-table>
     <RecordForm :form="form" :edit="edit" />
@@ -43,6 +43,9 @@
       editRecord(data) {
         this.edit = true;
         this.form = {...data};
+      },
+      removeRecord(data) {
+        this.$store.dispatch('REMOVE_RECORD', data)
       }
     }
   }

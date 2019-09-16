@@ -76,6 +76,9 @@ io.on('connection', async (socket) => {
     socket.on('EDIT_RECORD', async (data) => {
         await editRecord(socket, data);
     });
+    socket.on('REMOVE_RECORD', async (data) => {
+        await removeRecord(socket, data);
+    });
     socket.on('disconnect', () => {
         clients = clients.filter((client) => client.socket.id !== socket.id);
         io.emit('UPDATE_CONNECTED_USERS', {connectedUsers: clients.length});
@@ -124,6 +127,22 @@ async function editRecord(socket, data) {
             break;
         case 'Teams':
             await teamService.updateTeam(data.form);
+            break;
+        case 'Users':
+            break;
+        default:
+            console.log('Unknown table query ' + data.table);
+    }
+    await updateClientsCurrentData();
+}
+
+async function removeRecord(socket, data) {
+    switch(data.table) {
+        case 'Leagues':
+            await leagueService.deleteLeague(data.form.id);
+            break;
+        case 'Teams':
+            await teamService.deleteTeam(data.form.id);
             break;
         case 'Users':
             break;
