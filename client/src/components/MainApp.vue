@@ -1,12 +1,23 @@
 <template>
-  <div>
-    <h1>MAIN APP</h1>
-    <h1>Connected Users: {{ connectedUsers }}</h1>
-    <b-form-select v-model="selectedTable" :options="tablesNames" >
-      <option :value="null">Please select an option</option>
-    </b-form-select>
-    <b-button @click="goToTableView()">Show table</b-button>
-  </div>
+  <b-container>
+    <b-row>
+      <b-col>
+        <h1>MAIN APP</h1>
+        <h1>Connected Users: {{ connectedUsers }}</h1>
+        <b-form-select v-model="selectedTable" :options="tablesNames" >
+          <option :value="null">Please select an option</option>
+        </b-form-select>
+        <b-button @click="goToTableView()">Show table</b-button>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h1>Send query</h1>
+        <b-form-input type="text" v-model="specificQuery" placeholder="Send a query to database" />
+        <b-button @click="goToTableViewWithQuery()">Send query</b-button>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -23,6 +34,7 @@
       this.socket.on('UPDATE_CURRENT_DATA', ({currentData}) => {
         this.$store.dispatch('UPDATE_CURRENT_DATA', currentData)
       });
+      this.specificQuery = this.$store.getters.getSpecificQuery
     },
     computed: {
       socket() {
@@ -33,17 +45,23 @@
       },
       tablesNames() {
         return this.$store.getters.getTablesNames.map(name => ({value: name, text: name}))
-      }
+      },
     },
     data() {
       return {
         selectedTable: null,
+        specificQuery: null
       }
     },
     methods: {
       goToTableView() {
         if(this.selectedTable) {
           this.$store.dispatch('SHOW_TABLE_VIEW', this.selectedTable);
+        }
+      },
+      goToTableViewWithQuery() {
+        if(this.specificQuery) {
+          this.$store.dispatch('SHOW_TABLE_VIEW_FROM_SPECIFIC_QUERY', this.specificQuery);
         }
       }
     }

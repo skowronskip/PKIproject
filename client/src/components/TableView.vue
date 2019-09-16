@@ -1,16 +1,21 @@
 <template>
-  <div>
-    <h1>Table View</h1>
-    <h1>Connected Users: {{ connectedUsers }}</h1>
-    <h1>{{ currentTable }}</h1>
-    <b-table :items="currentData">
-      <template v-slot:cell(action)="data">
-        <b-button @click="editRecord(data.item)">Edit</b-button>
-        <b-button @click="removeRecord(data.item)">Remove</b-button>
-      </template>
-    </b-table>
-    <RecordForm :form="form" :edit="edit" />
-  </div>
+  <b-container>
+    <b-row>
+      <b-col>
+        <h1>Table View</h1>
+        <h1>Connected Users: {{ connectedUsers }}</h1>
+        <h1>{{ currentTable }}</h1>
+        <b-table v-if="!error" :items="currentData">
+          <template v-slot:cell(action)="data">
+            <b-button @click="editRecord(data.item)">Edit</b-button>
+            <b-button @click="removeRecord(data.item)">Remove</b-button>
+          </template>
+        </b-table>
+        <RecordForm v-if="currentTable && !error" :form="form" :edit="edit" />
+        <h1 v-if="error">{{error}}</h1>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -36,7 +41,14 @@
         return this.$store.getters.getCurrentTable
       },
       currentData() {
-        return this.$store.getters.getCurrentData.map((item) => ({...item, action: ''}));
+        const currentData = this.$store.getters.getCurrentData;
+        if (this.currentTable) {
+          return currentData.data.map((item) => ({...item, action: ''}))
+        }
+        return currentData.data
+      },
+      error() {
+        return this.$store.getters.getCurrentData.error;
       }
     },
     methods: {

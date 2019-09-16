@@ -52,8 +52,15 @@ const actions = {
         context.commit('UPDATE_CURRENT_DATA', currentData);
     },
     SHOW_TABLE_VIEW: (context, table) => {
+        context.commit('SET_SPECIFIC_QUERY', null);
         context.commit('SET_CURRENT_TABLE', table);
         context.getters.getSocket.emit('GET_TABLE', table);
+        router.push({name: 'table'});
+    },
+    SHOW_TABLE_VIEW_FROM_SPECIFIC_QUERY: (context, query) => {
+        context.commit('SET_SPECIFIC_QUERY', query);
+        context.commit('SET_CURRENT_TABLE', null);
+        context.getters.getSocket.emit('GET_QUERY', query);
         router.push({name: 'table'});
     },
     ADD_RECORD: (context, form) => {

@@ -67,7 +67,15 @@ io.on('connection', async (socket) => {
         const clientIndex = clients.findIndex((client) => client.socket.id === socket.id);
         if (clientIndex !== -1) {
             clients[clientIndex].currentTable = table;
+            clients[clientIndex].specificQuery = null;
             await updateCurrentData(socket, table);
+        }
+    });
+    socket.on('GET_QUERY', async (query) => {
+        const clientIndex = clients.findIndex((client) => client.socket.id === socket.id);
+        if (clientIndex !== -1) {
+            clients[clientIndex].specificQuery = query;
+            await updateCurrentDataFromQuery(socket, query);
         }
     });
     socket.on('ADD_RECORD', async (data) => {
@@ -88,10 +96,10 @@ io.on('connection', async (socket) => {
 async function updateCurrentData(socket, table) {
     switch(table) {
         case 'Leagues':
-            socket.emit('UPDATE_CURRENT_DATA', {currentData: await leagueService.getAllLeagues()});
+            socket.emit('UPDATE_CURRENT_DATA', {currentData: {data: await leagueService.getAllLeagues()}});
             break;
         case 'Teams':
-            socket.emit('UPDATE_CURRENT_DATA', {currentData: await teamService.getAllTeams()});
+            socket.emit('UPDATE_CURRENT_DATA', {currentData: {data: await teamService.getAllTeams()}});
             break;
         case 'Users':
             break;
@@ -100,8 +108,21 @@ async function updateCurrentData(socket, table) {
     }
 }
 
+async function updateCurrentDataFromQuery(socket, query) {
+    const currentData = await databaseService.getQuery(query);
+    if (currentData.error) {
+        return socket.emit('UPDATE_CURRENT_DATA', {currentData: {error: currentData.error}});
+    }
+    return socket.emit('UPDATE_CURRENT_DATA', {currentData: {data: currentData[0]}});
+}
+
 async function updateClientsCurrentData() {
-    await Promise.all(clients.map(async (client) => updateCurrentData(client.socket, client.currentTable)));
+    await Promise.all(clients.map(async (client) => {
+        if (client.specificQuery) {
+            return updateCurrentDataFromQuery(client.socket, client.specificQuery);
+        }
+        return updateCurrentData(client.socket, client.currentTable)
+    }));
 }
 
 async function addRecord(socket, data) {

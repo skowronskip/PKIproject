@@ -14,13 +14,21 @@ const mutations = {
         state.socketData.tablesNames = tablesNames;
     },
     UPDATE_CURRENT_DATA: (state, currentData) => {
-        state.socketData.currentData = currentData;
+        if (currentData.error) {
+            state.socketData.currentData = {...currentData, data: []};
+        } else {
+            state.socketData.currentData = {...currentData, error: null};
+
+        }
     },
     CREATE_SOCKET: (state) => {
         state.socketData.socket = io('localhost:3000');
     },
     SET_CURRENT_TABLE: (state, table) => {
         state.socketData.currentTable = table;
+    },
+    SET_SPECIFIC_QUERY: (state, query) => {
+        state.socketData.specificQuery = query;
     },
 };
 

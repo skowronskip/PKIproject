@@ -3,7 +3,11 @@ const state = {
     socketData: {
         socket: null,
         currentTable: null,
-        currentData: [],
+        specificQuery: null,
+        currentData: {
+            data: [],
+            error: null
+        },
         tablesNames: [],
         connectedUsers: 0
     }

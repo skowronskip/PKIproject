@@ -9,7 +9,16 @@ async function showTables() {
     }
 }
 
+async function getQuery(query) {
+    try {
+        return await db.sequelize.query(query);
+    } catch (e) {
+        return {error: e.message}
+    }
+}
+
 
 export default {
-    showTables
+    showTables,
+    getQuery
 }
