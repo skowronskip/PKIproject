@@ -13,10 +13,13 @@ async function signUp(req, res) {
                     newUser
                 })
             }
-            return res.status(500).send({msg: 'Cannot create new user!'});
+            return res.status(500).json({message: 'Cannot create new user!'});
         } catch (e) {
             console.log(e);
-            return res.status(500).end();
+            return res.status(500).json({
+                success: false,
+                message: 'There was a problem with server response'
+            });
         }
     }
     return res.status(400).send({msg: 'Missing fields'});
@@ -43,7 +46,10 @@ async function login (req, res) {
             });
         } catch (e) {
             console.log(e);
-            return res.status(500).end();
+            return res.status(500).json({
+                success: false,
+                message: 'There was a problem with server response'
+            });
         }
     }
     return res.status(400).json({

@@ -1,5 +1,6 @@
 import {loginUser, signupUser} from "../utils/apiRequests";
 import router from "../router";
+import Vue from 'vue';
 
 const actions = {
     CHECK_IF_USER_IS_LOGGED(context) {
@@ -16,7 +17,7 @@ const actions = {
             context.commit('LOGIN_USER');
             context.dispatch('LOGIN_SUCCESS', data)
         } catch (e) {
-            // TODO HANDLE ERROR
+            Vue.toasted.show(e.response.data.message);
         }
     },
     SIGNUP_USER: async (context, {login, password, email}) => {
@@ -24,7 +25,7 @@ const actions = {
             await signupUser(login, password, email);
             context.dispatch('SIGNUP_SUCCESS')
         } catch (e) {
-            // TODO HANDLE ERROR
+            Vue.toasted.show(e.response.data.message);
         }
     },
     LOGOUT_USER: (context) => {

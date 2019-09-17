@@ -22,7 +22,7 @@ const mutations = {
         }
     },
     CREATE_SOCKET: (state) => {
-        state.socketData.socket = io('localhost:3000');
+        state.socketData.socket = io('http://apipki.pskowron.ski');
     },
     SET_CURRENT_TABLE: (state, table) => {
         state.socketData.currentTable = table;

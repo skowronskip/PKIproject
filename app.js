@@ -74,6 +74,7 @@ io.on('connection', async (socket) => {
     socket.on('GET_QUERY', async (query) => {
         const clientIndex = clients.findIndex((client) => client.socket.id === socket.id);
         if (clientIndex !== -1) {
+            clients[clientIndex].currentTable = null;
             clients[clientIndex].specificQuery = query;
             await updateCurrentDataFromQuery(socket, query);
         }
