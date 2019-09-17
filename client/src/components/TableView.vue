@@ -74,7 +74,11 @@
       fields() {
         const {data} = this.$store.getters.getCurrentData;
         if (data && data.length > 0) {
-          return Object.keys(data[0]).map(key => ({key, sortable: true}));
+          const fields = Object.keys(data[0]).map(key => ({key, sortable: true}));
+          if (this.currentTable) {
+            fields.push('action');
+          }
+          return fields;
         }
         return null;
       },
